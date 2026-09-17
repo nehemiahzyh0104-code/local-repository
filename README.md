@@ -1,6 +1,6 @@
 # ZYH的临时文件库
-## Nixos下访问/mnt/inter/local-repository/
-## Windows下访问
+## Nixos下访问 /mnt/inter/local-repository/
+## Windows下访问 E:\local-repository
 本仓库使用**GPL 2.0**协议
 
 由于作者掌握了使用git程度的能力，所以创建了这个仓库。
