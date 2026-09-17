@@ -1,2 +1,2 @@
-# local-temporary-programming-file
-This is a storage housing temporary programming files on Nixos maintained by ZYH.
+# ZYH的临时文件库
+Nixos下访问/mnt/inter/#programs,Windows下访问INTER
