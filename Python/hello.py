@@ -25,4 +25,4 @@ while True:
     except ValueError:
         print("阶数错误")
     except Exception as e:
-        print("错误：{e}")
+        print("错误：{e}") 
