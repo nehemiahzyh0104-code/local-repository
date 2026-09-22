@@ -8,12 +8,12 @@ while True:
 
         x = symbols(var)
         fct = sympify(expr)
-        
+
         result = diff(fct, x, order)
 
         print("\n导数为\t")
         pretty_print(result)
-        
+
         go = input("继续?(y/n)")
         if go == "y":
             continue
@@ -25,4 +25,4 @@ while True:
     except ValueError:
         print("阶数错误")
     except Exception as e:
-        print("错误：{e}") 
+        print("错误：{e}")
