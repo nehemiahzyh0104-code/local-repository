@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -m py_compile guess_number.py)",
+      "Bash(python3 /tmp/test_guess.py)",
+      "Bash(command -v python python3.14)",
+      "Bash(PY=/mnt/inter/local-repository/Python/.venv/bin/python; $PY --version && $PY -m py_compile /mnt/inter/local-repository/Python/guess_number.py && echo \"语法检查通过\" && $PY /tmp/test_guess.py)",
+      "Bash(pdflatex -interaction=nonstopmode -halt-on-error hw2.tex)",
+      "Bash(echo \"exit=$?\")",
+      "Read(//tmp/**)",
+      "Bash(gcc -O0 -o p4test /mnt/inter/local-repository/C/HW1/p4.c)",
+      "Bash(./p4test)"
+    ]
+  },
+  "outputStyle": "default"
+}
