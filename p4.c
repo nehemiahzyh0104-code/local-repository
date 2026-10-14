@@ -37,7 +37,7 @@ int
 main (int argc, char *argv[])
 {
     int k = 1;
-    while(k<argc)
+    while (k < argc)
         {
             char *ver, *std;
 
@@ -74,10 +74,10 @@ main (int argc, char *argv[])
             else if (strcmp (argv[k], "-I") == 0)
                 {
                     ver = argv[k + 1];
-                    printf ("-I %s: Add the directory xxx to the list of "
+                    printf ("-I %s: Add the directory %s to the list of "
                             "directories to be searched for header files "
                             "during preprocessing.\n",
-                            ver);
+                            ver, ver);
                     k++;
                 }
 
@@ -88,6 +88,31 @@ main (int argc, char *argv[])
                     std = convert (ver);
                     printf ("-std=%s: Set the language standard to %s.\n", ver,
                             std);
+                }
+            else
+                {
+                    char *typ = "";
+                    
+                    if (strstr (argv[k], ".cpp") || strstr (argv[k], ".C")
+                             || strstr (argv[k], ".cc")
+                             || strstr (argv[k], ".cxx"))
+                        {
+                            typ = "C++ source code";
+                        }
+                    else if (strstr (argv[k], ".hpp")
+                             || strstr (argv[k], ".hxx"))
+                        {
+                            typ = "C++ header file";
+                        }
+                    else if (strstr (argv[k], ".c"))
+                        {
+                            typ = "C source code";
+                        }
+                    else if (strstr (argv[k], ".h"))
+                        {
+                            typ = "C/C++ header file";
+                        }
+                    printf ("%s: %s as input file.\n", argv[k], typ);
                 }
             k++;
         }
