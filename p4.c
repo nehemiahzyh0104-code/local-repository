@@ -83,8 +83,7 @@ main (int argc, char *argv[])
 
             else if (strstr (argv[k], "-std"))
                 {
-                    char *tmp;
-                    tmp = strtok (argv[k], "=");
+                    ver = strtok (argv[k], "=");
                     ver = strtok (NULL, "=");
                     std = convert (ver);
                     printf ("-std=%s: Set the language standard to %s.\n", ver,
