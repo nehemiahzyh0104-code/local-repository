@@ -1,0 +1,16 @@
+[project]
+name = "local-repository"
+version = "1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "pandas>=3.0.5",
+    "sympy",
+]
+
+[tool.ruff]
+indent-width = 4
+
+[tool.ruff.format]
+indent-style = "space"
