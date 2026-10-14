@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 int
 main (void)
@@ -7,7 +6,7 @@ main (void)
     int n;
     scanf ("%d", &n);
 
-    double *para = malloc ((n + 1) * sizeof (double));
+    double para[30];
     for (int i = 0; i <= n; i++)
         {
             scanf ("%lf", &para[i]);
@@ -29,6 +28,5 @@ main (void)
             printf ("%.3lf\n", opt);
         }
 
-    free (para);
     return 0;
 }
