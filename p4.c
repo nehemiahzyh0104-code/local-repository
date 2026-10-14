@@ -81,7 +81,7 @@ main (int argc, char *argv[])
                     k++;
                 }
 
-            else if (strstr (argv[k], "-std"))
+            else if (strncmp (argv[k], "-std=", 5) == 0)
                 {
                     ver = strtok (argv[k], "=");
                     ver = strtok (NULL, "=");
@@ -92,23 +92,27 @@ main (int argc, char *argv[])
             else
                 {
                     char *typ = "";
-                    
-                    if (strstr (argv[k], ".cpp") || strstr (argv[k], ".C")
-                             || strstr (argv[k], ".cc")
-                             || strstr (argv[k], ".cxx"))
+                    char *ext = strrchr (argv[k], '.');
+
+                    if (ext != NULL
+                        && (strcmp (ext, ".cpp") == 0
+                            || strcmp (ext, ".C") == 0
+                            || strcmp (ext, ".cc") == 0
+                            || strcmp (ext, ".cxx") == 0))
                         {
                             typ = "C++ source code";
                         }
-                    else if (strstr (argv[k], ".hpp")
-                             || strstr (argv[k], ".hxx"))
+                    else if (ext != NULL
+                             && (strcmp (ext, ".hpp") == 0
+                                 || strcmp (ext, ".hxx") == 0))
                         {
                             typ = "C++ header file";
                         }
-                    else if (strstr (argv[k], ".c"))
+                    else if (ext != NULL && strcmp (ext, ".c") == 0)
                         {
                             typ = "C source code";
                         }
-                    else if (strstr (argv[k], ".h"))
+                    else if (ext != NULL && strcmp (ext, ".h") == 0)
                         {
                             typ = "C/C++ header file";
                         }
