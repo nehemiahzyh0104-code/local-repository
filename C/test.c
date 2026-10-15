@@ -1,11 +1,18 @@
 #include <stdio.h>
 
+void fac(int i)
+{
+    if(i!=0){
+        putchar(i);
+    }
+    else{
+        fac(i%10);
+    }
+}
+
 int
 main ()
-{
-    int a[2]={1,2};
-    int (*p)[2]=&a;
-    
-    printf("%i",(*p)[1]);
+{ 
+    fac(114);
     return 0;
 }

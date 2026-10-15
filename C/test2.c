@@ -1,20 +1,21 @@
 #include <stdio.h>
 
-void reverse(int a[], int n)
+typedef struct
 {
-    for (int i = 0, j = n - 1; i < j; i++, j--) {
-        int t = a[i];
-        a[i] = a[j];
-        a[j] = t;
-    }
+    char *name;
+    char *num;
+    float score;
+} Exam;
+
+Exam createstu(char *n,char* nu,float s){
+    Exam stu = {n,nu,s};
+    return stu;
 }
 
-int main()
+int
+main()
 {
-    int a[] = {1,2,3};
-    int n = sizeof(a) / sizeof(a[0]);
-    reverse(a, n);
-    for (int i = 0; i < n; i++)
-        printf("%d ", a[i]);
+    Exam stu=createstu("Tom","31",60);
+    printf("%s's score is %.1f.",stu.name,stu.score);
     return 0;
 }
