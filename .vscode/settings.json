@@ -5,6 +5,16 @@
     "python.analysis.diagnosticsSource": "Pylance + Pyright",
     "python.analysis.autoImportCompletions": false,
 
+    "code-runner.runInTerminal": true,
+    "code-runner.preserveFocus": false,
+    "code-runner.saveFileBeforeRun": true,
+    "code-runner.ignoreSelection": true,
+
+    "code-runner.executorMap": {
+        "c": "cd \"$dir\" && gcc -std=c17 -Wall -Wextra -O2 -g \"$fileName\" -o \"$fileNameWithoutExt.out\" && \"./$fileNameWithoutExt.out\" && rm -- \"$fileNameWithoutExt.out\"",
+        "cpp": "cd \"$dir\" && g++ -std=c++17 -Wall -Wextra -O2 -g \"$fileName\" -o \"$fileNameWithoutExt.out\" && \"./$fileNameWithoutExt.out\" && rm -- \"$fileNameWithoutExt.out\""
+    },
+
     "[c]": {
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
         "editor.formatOnSave": true

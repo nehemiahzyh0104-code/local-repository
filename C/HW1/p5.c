@@ -15,16 +15,8 @@ main ()
 
             if (check == 2)
                 {
-                    if (inptm > num)
-                        {
-                            printf ("Impossible.");
-                            break;
-                        }
-                    else
-                        {
-                            num = num + inptp - inptm;
-                            n++;
-                        }
+                    num = num + inptp - inptm;
+                    n++;
                 }
             else
                 {
