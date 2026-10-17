@@ -1,4 +1,4 @@
-from sympy import symbols, sympify, diff, pretty_print, SympifyError
+from sympy import SympifyError, diff, pretty_print, symbols, sympify
 
 while True:
     try:
@@ -24,5 +24,5 @@ while True:
         print("表达式错误")
     except ValueError:
         print("阶数错误")
-    except Exception as e:
-        print("错误：{e}")
+    except Exception as e:  # noqa: BLE001
+        print(f"错误: {e}")

@@ -7,15 +7,17 @@ typedef struct
     float score;
 } Exam;
 
-Exam createstu(char *n,char* nu,float s){
-    Exam stu = {n,nu,s};
+Exam
+createstu (char *n, char *nu, float s)
+{
+    Exam stu = { n, nu, s };
     return stu;
 }
 
 int
-main()
+main ()
 {
-    Exam stu=createstu("Tom","31",60);
-    printf("%s's score is %.1f.",stu.name,stu.score);
+    Exam stu = createstu ("Tom", "31", 60);
+    printf ("%s's score is %.1f.", stu.name, stu.score);
     return 0;
 }

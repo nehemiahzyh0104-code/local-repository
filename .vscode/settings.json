@@ -1,0 +1,27 @@
+{
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python.analysis.typeCheckingMode": "standard",
+    "python.defaultInterpreterPath": "${workspaceFolder}/Python/.venv/bin/python",
+    "python.analysis.diagnosticsSource": "Pylance + Pyright",
+    "python.analysis.autoImportCompletions": false,
+
+    "code-runner.runInTerminal": true,
+    "code-runner.preserveFocus": false,
+    "code-runner.saveFileBeforeRun": true,
+    "code-runner.ignoreSelection": true,
+
+    "code-runner.executorMap": {
+        "c": "cd \"$dir\" && gcc -std=c17 -Wall -Wextra -O2 -g \"$fileName\" -o \"$fileNameWithoutExt.out\" && \"./$fileNameWithoutExt.out\"",
+        "cpp": "cd \"$dir\" && g++ -std=c++17 -Wall -Wextra -O2 -g \"$fileName\" -o \"$fileNameWithoutExt.out\" && \"./$fileNameWithoutExt.out\""
+    },
+
+    "[c]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.formatOnSave": true
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.formatOnSave": true
+    }
+    
+}

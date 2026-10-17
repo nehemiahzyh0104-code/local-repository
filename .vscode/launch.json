@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "调试 C/C++ 文件",
+      "type": "lldb-dap",
+      "request": "launch",
+      "program": "${workspaceFolder}/.vscode/f5-debug.out",
+      "cwd": "${fileDirname}",
+      "preLaunchTask": "编译 C/C++ 文件",
+      "postDebugTask": "删除 C/C++ 编译文件",
+      "console": "integratedTerminal"
+    }
+  ]
+}

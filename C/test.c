@@ -1,18 +1,21 @@
 #include <stdio.h>
 
-void fac(int i)
+void
+fac (int i)
 {
-    if(i!=0){
-        putchar(i);
-    }
-    else{
-        fac(i%10);
-    }
+    if (i != 0)
+        {
+            putchar (i);
+        }
+    else
+        {
+            fac (i % 10);
+        }
 }
 
 int
 main ()
-{ 
-    fac(114);
+{
+    fac (114);
     return 0;
 }

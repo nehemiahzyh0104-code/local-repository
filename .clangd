@@ -1,0 +1,13 @@
+If:
+  PathMatch: '.*\.c'
+CompileFlags:
+  Remove: [-std=*]
+  Add: [-std=c17, -Wall, -Wextra, -O2, -g]
+
+---
+
+If:
+  PathMatch: '.*\.(cpp|cc|cxx|hpp|hh|hxx)'
+CompileFlags:
+  Remove: [-std=*]
+  Add: [-std=c++17, -Wall, -Wextra, -O2, -g]

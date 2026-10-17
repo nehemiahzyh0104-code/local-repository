@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "编译 C/C++ 文件",
+      "type": "process",
+      "command": "bash",
+      "args": [
+        "-c",
+        "case \"$1\" in *.c) exec gcc -std=c17 -Wall -Wextra -O0 -g \"$1\" -o \"$2\" ;; *.cpp|*.cc|*.cxx|*.C) exec g++ -std=c++17 -Wall -Wextra -O0 -g \"$1\" -o \"$2\" ;; *) echo '请选择 C/C++ 源文件' >&2; exit 1 ;; esac",
+        "--",
+        "${file}",
+        "${workspaceFolder}/.vscode/f5-debug.out"
+      ],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "删除 C/C++ 编译文件",
+      "type": "process",
+      "command": "rm",
+      "args": [
+        "-f",
+        "--",
+        "${workspaceFolder}/.vscode/f5-debug.out"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "close": true
+      }
+    }
+  ]
+}
