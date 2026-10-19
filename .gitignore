@@ -12,3 +12,7 @@ a.out
 .env
 .env.*
 !.env.example
+
+/.claude/
+
+/Python/uv.lock
