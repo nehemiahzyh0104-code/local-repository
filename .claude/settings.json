@@ -33,7 +33,7 @@
   "timeFormat": "auto",
   "autoCompactEnabled": true,
   "autoScrollEnabled": true,
-  "autoMemoryEnabled": true,
+  "autoMemoryEnabled": false,
   "fileCheckpointingEnabled": true,
   "respectGitignore": true,
   "terminalProgressBarEnabled": true,
