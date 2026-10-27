@@ -1,58 +1,89 @@
+#include <complex.h>
 #include <stddef.h>
 
 int
 hw3_islower (int ch)
-{ /* TODO */
-    return 0;
+{
+    return (ch >= 'a' && ch <= 'z');
 }
+
 int
 hw3_isupper (int ch)
-{ /* TODO */
-    return 0;
+{
+    return (ch >= 'A' && ch <= 'Z');
 }
+
 int
 hw3_isalpha (int ch)
-{ /* TODO */
-    return 0;
+{
+    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
 }
+
 int
 hw3_isdigit (int ch)
-{ /* TODO */
-    return 0;
+{
+    return ('0' <= ch && ch <= '9');
 }
+
 int
 hw3_tolower (int ch)
-{ /* TODO */
-    return 0;
+{
+    return hw3_isupper (ch) ? ch + 32 : ch;
 }
+
 int
 hw3_toupper (int ch)
-{ /* TODO */
-    return 0;
+{
+    return hw3_islower (ch) ? ch - 32 : ch;
 }
+
+// --------------------------------------------------
 
 size_t
 hw3_strlen (const char *str)
-{ /* TODO */
-    return 0;
+{
+    char *i = (char *)str; // no \0
+    while (*i)
+        i++;
+    return i - str;
 }
+
+
 char *
-hw3_strchr (const char *str, int ch)
-{ /* TODO */
-    return 0;
+hw3_strchr (const char *str, int ch) // yes \0
+{
+    char *i = (char *)str;
+    do
+        if ((int)*i == ch)
+            return i;
+    while (*i);
+    return NULL;
 }
+
+
 char *
 hw3_strcpy (char *dest, const char *src)
-{ /* TODO */
-    return 0;
+{
+    for (int i = 0; i < ((int)hw3_strlen (src) + 1); i++)
+        dest[i] = src[i];
+    return dest;
 }
+
+
 char *
 hw3_strcat (char *dest, const char *src)
-{ /* TODO */
-    return 0;
+{
+    for (int i = 0; i < ((int)hw3_strlen (src) + 1); i++)
+        dest[hw3_strlen (dest) + i] = src[i];
+    return dest;
 }
+
+
 int
 hw3_strcmp (const char *lhs, const char *rhs)
-{ /* TODO */
-    return 0;
+{
+    const char *n = lhs, *m = rhs;
+    while (lhs != 0 && rhs != 0 && lhs == rhs)
+        n++, m++;
+    return (unsigned int)(*n - *m);
 }
