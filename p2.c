@@ -4,25 +4,11 @@
 int
 palic (char *pali, int m)
 {
-    if (m % 2) // even
+    for (int i = 0; i < m / 2; i++)
         {
-            for (int i = 0; i < m / 2; i++)
+            if (pali[i] != pali[m - 1 - i])
                 {
-                    if (pali[i] != pali[m - 1 - i])
-                        {
-                            return 0;
-                        }
-                }
-        }
-
-    else
-        {
-            for (int i = 0; i < (m - 1) / 2; i++)
-                {
-                    if (pali[i] != pali[m - 1 - i])
-                        {
-                            return 0;
-                        }
+                    return 0;
                 }
         }
 
