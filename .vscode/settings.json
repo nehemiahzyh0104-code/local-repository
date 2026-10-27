@@ -23,6 +23,8 @@
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
         "editor.formatOnSave": true
     },
-    "editor.wordWrap": "bounded"
+    "editor.wordWrap": "bounded",
+
+    "editor.inlayHints.enabled": "off"
     
 }
