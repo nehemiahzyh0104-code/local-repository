@@ -15,7 +15,7 @@ struct Record
     const char *file_name;
 };
 
-static struct Record dnote[MAX_RECORDS] = { NULL, 0, 0, NULL }; // deathnote
+static struct Record dnote[MAX_RECORDS] = { 0 }; // deathnote for mem
 
 int // 计算长度
 fnd ()
@@ -41,13 +41,13 @@ murder (void *ptr)
 {
     int i = fnd ();
     int n = 0;
-    while (n <= i)
+    while (n < i)
         {
             if (dnote[n].ptr == ptr)
                 {
-                    dnote[n] = (struct Record){ NULL, 0, 0, NULL };
+                    dnote[n] = (struct Record){ 0 };
 
-                    for (int k = n; k <= i; k++)
+                    for (int k = n; k < i; k++)
                         dnote[k] = dnote[k + 1];
 
                     return 1;
@@ -101,8 +101,6 @@ recorded_free (void *ptr, int line, const char *file)
     recorded_calloc (CNT, EACH_SIZE, __LINE__, __FILE__)
 #define free(PTR) recorded_free (PTR, __LINE__, __FILE__)
 
-#endif
-
 
 
 void check_leak (void) __attribute__ ((destructor));
@@ -110,15 +108,26 @@ void check_leak (void) __attribute__ ((destructor));
 void
 check_leak (void)
 {
-    if (fnd () != 0)
+    printf ("Summary:\n");
+    if (fnd ())
         {
+            size_t sum = 0;
             int i = fnd ();
-            for (int k = 0; k <= i; k++)
+            for (int k = 0; k < i; k++)
                 {
                     printf ("%zu bytes memory not freed (allocated in file "
-                            "%s, line %d\n)",
+                            "%s, line %d)\n",
                             dnote[k].size, dnote[k].file_name,
                             dnote[k].line_no);
+                    sum += dnote[k].size;
                 }
+            printf ("%d allocation records not freed (%zu bytes in total).\n",
+                    i, sum);
+        }
+    else
+        {
+            printf ("All allocations have been freed.\n");
         }
 }
+
+#endif
