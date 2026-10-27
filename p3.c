@@ -1,4 +1,3 @@
-#include <complex.h>
 #include <stddef.h>
 
 int
@@ -54,8 +53,11 @@ hw3_strchr (const char *str, int ch) // yes \0
 {
     char *i = (char *)str;
     do
-        if ((int)*i == ch)
-            return i;
+        {
+            if ((int)*i == ch)
+                return i;
+            i++;
+        }
     while (*i);
     return NULL;
 }
@@ -64,7 +66,8 @@ hw3_strchr (const char *str, int ch) // yes \0
 char *
 hw3_strcpy (char *dest, const char *src)
 {
-    for (int i = 0; i < ((int)hw3_strlen (src) + 1); i++)
+    int len = (int)hw3_strlen (src);
+    for (int i = 0; i < (len + 1); i++)
         dest[i] = src[i];
     return dest;
 }
@@ -73,8 +76,11 @@ hw3_strcpy (char *dest, const char *src)
 char *
 hw3_strcat (char *dest, const char *src)
 {
-    for (int i = 0; i < ((int)hw3_strlen (src) + 1); i++)
-        dest[hw3_strlen (dest) + i] = src[i];
+    int init = (int)hw3_strlen (dest);
+    int len = (int)hw3_strlen (src);
+
+    for (int i = 0; i < (len + 1); i++)
+        dest[init + i] = src[i];
     return dest;
 }
 
@@ -83,7 +89,7 @@ int
 hw3_strcmp (const char *lhs, const char *rhs)
 {
     const char *n = lhs, *m = rhs;
-    while (lhs != 0 && rhs != 0 && lhs == rhs)
+    while (*n != 0 && *m != 0 && *n == *m)
         n++, m++;
-    return (unsigned int)(*n - *m);
+    return *n - *m;
 }
