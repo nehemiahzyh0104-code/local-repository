@@ -1,18 +1,19 @@
-FROM node:24-bookworm
+FROM node:24.22.3-bookworm
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ripgrep tmux less jq \
+ && rm -rf /var/lib/apt/lists/*
 
 RUN corepack enable pnpm \
-    && npm install -g @deepseek-ai/dsh @deepseek-harness-tui/dsh-tui \
-    && npm cache clean --force
+ && npm install -g \
+      "@deepseek-ai/dsh@0.2.2-rc.1" \
+      "@deepseek-harness-tui/dsh-tui@0.20.0" \
+      "@openai/codex@0.168.0" \
+ && npm cache clean --force
 
 ENV HOME=/state \
-    DSH_HOME=/state
+    DSH_HOME=/state \
+    CODEX_HOME=/state/.codex \
+    LANG=C.UTF-8
 
 CMD ["dsh", "web", "--no-open"]
-
-
-
-# Creating a new sandbox
-
-# docker build -t dsh - < agent.Dockerfile
-# docker run -d --name dsh --mount type=bind,src=/persist/docker/dsh,dst=/state --mount type=bind,src=/mnt/inter/local-repository,dst=/workspace -w /workspace  -p 127.0.0.1:3080:3080 dsh sh -c 'set -- $(hostname -i); exec dsh web --no-open --host "$1" --public-url http://127.0.0.1:3080/ --trusted-host 127.0.0.1:3080'
-# docker logs -f dsh
