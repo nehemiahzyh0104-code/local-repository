@@ -2,7 +2,9 @@ FROM node:24.22.3-bookworm
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
-      bubblewrap ripgrep tmux less jq procps \
+      bubblewrap ripgrep tmux less jq procps locales \
+ && sed -i 's/^# *\(zh_SG.UTF-8 UTF-8\)/\1/' /etc/locale.gen \
+ && locale-gen \
  && rm -rf /var/lib/apt/lists/*
 
 RUN corepack enable pnpm \
@@ -12,9 +14,16 @@ RUN corepack enable pnpm \
       "@openai/codex@0.168.0" \
  && npm cache clean --force
 
+RUN curl -fsSL https://antigravity.google/cli/install.sh | bash \
+ && mv /root/.local/bin/agy /usr/local/bin/agy \
+ && agy --version
+
 ENV HOME=/state \
     DSH_HOME=/state \
     CODEX_HOME=/state/.codex \
-    LANG=C.UTF-8
+    TERM=xterm-256color \
+    LANG=zh_SG.UTF-8 \
+    LANGUAGE=zh_SG:zh \
+    TZ=Asia/Singapore
 
 CMD ["dsh", "web", "--no-open"]
