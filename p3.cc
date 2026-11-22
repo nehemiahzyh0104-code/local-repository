@@ -141,7 +141,7 @@ operator<<(std::ostream& out, const Dynarray& inpt)
 
     for (Dynarray::size_type i = 0; i < inpt.size(); i++) {
         if (i > 0)
-            out << ',';
+            out << ", ";
 
         out << inpt[i];
     }

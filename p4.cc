@@ -69,20 +69,16 @@ class SharedPtr
     T* ptr_ = nullptr;
     std::size_t* count_ = nullptr;
 
-    void release_ownership() noexcept
-    {
-        T* ptr = std::exchange(ptr_, nullptr);
-        std::size_t* count = std::exchange(count_, nullptr);
-        if (count != nullptr && --(*count) == 0) {
-            delete ptr;
-            delete count;
-        }
-    }
-
   public:
     SharedPtr() = default;
 
-    ~SharedPtr() { release_ownership(); }
+    ~SharedPtr()
+    {
+        if (count_ != nullptr && --(*count_) == 0) {
+            delete ptr_;
+            delete count_;
+        }
+    }
 
     SharedPtr(T* ptr)
       : ptr_(ptr)
@@ -107,9 +103,6 @@ class SharedPtr
 
     SharedPtr& operator=(const SharedPtr& inpt)
     {
-        if (this == &inpt) {
-            return *this;
-        }
         SharedPtr copy(inpt);
         return *this = std::move(copy);
     }
@@ -126,14 +119,13 @@ class SharedPtr
     {
         if (this != &inpt) {
             SharedPtr replacement(std::move(inpt));
-            release_ownership();
             std::swap(ptr_, replacement.ptr_);
             std::swap(count_, replacement.count_);
         }
         return *this;
     }
 
-    /*--------------------------------------------------------------*/
+    /*-------------------------------------------------------*/
 
     T& operator*() { return *ptr_; }
     const T& operator*() const { return *ptr_; }
