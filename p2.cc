@@ -44,41 +44,41 @@ class Dynarray
 
     ~Dynarray() { delete[] data_; }
 
-    Dynarray(const Dynarray& other)
-      : Dynarray(other.size_)
+    Dynarray(const Dynarray& inpt)
+      : Dynarray(inpt.size_)
     {
         for (std::size_t i = 0; i < size_; ++i) {
-            data_[i] = other.data_[i];
+            data_[i] = inpt.data_[i];
         }
     }
 
-    Dynarray& operator=(const Dynarray& other)
+    Dynarray& operator=(const Dynarray& inpt)
     {
-        if (this != &other) {
-            Dynarray copy(other);
+        if (this != &inpt) {
+            Dynarray copy(inpt);
             *this = std::move(copy);
         }
         return *this;
     }
 
-    Dynarray(Dynarray&& other) noexcept
-      : size_(other.size_)
-      , data_(other.data_)
+    Dynarray(Dynarray&& inpt) noexcept
+      : size_(inpt.size_)
+      , data_(inpt.data_)
     {
-        other.size_ = 0;
-        other.data_ = nullptr;
+        inpt.size_ = 0;
+        inpt.data_ = nullptr;
     }
 
-    Dynarray& operator=(Dynarray&& other) noexcept
+    Dynarray& operator=(Dynarray&& inpt) noexcept
     {
-        if (this != &other) {
+        if (this != &inpt) {
             delete[] data_;
 
-            size_ = other.size_;
-            data_ = other.data_;
+            size_ = inpt.size_;
+            data_ = inpt.data_;
 
-            other.size_ = 0;
-            other.data_ = nullptr;
+            inpt.size_ = 0;
+            inpt.data_ = nullptr;
         }
         return *this;
     }

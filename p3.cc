@@ -40,41 +40,41 @@ class Dynarray
 
     ~Dynarray() { delete[] data_; }
 
-    Dynarray(const Dynarray& other)
-      : Dynarray(other.size_)
+    Dynarray(const Dynarray& inpt)
+      : Dynarray(inpt.size_)
     {
         for (std::size_t i = 0; i < size_; ++i) {
-            data_[i] = other.data_[i];
+            data_[i] = inpt.data_[i];
         }
     }
 
-    Dynarray& operator=(const Dynarray& other)
+    Dynarray& operator=(const Dynarray& inpt)
     {
-        if (this != &other) {
-            Dynarray copy(other);
+        if (this != &inpt) {
+            Dynarray copy(inpt);
             *this = std::move(copy);
         }
         return *this;
     }
 
-    Dynarray(Dynarray&& other) noexcept
-      : size_(other.size_)
-      , data_(other.data_)
+    Dynarray(Dynarray&& inpt) noexcept
+      : size_(inpt.size_)
+      , data_(inpt.data_)
     {
-        other.size_ = 0;
-        other.data_ = nullptr;
+        inpt.size_ = 0;
+        inpt.data_ = nullptr;
     }
 
-    Dynarray& operator=(Dynarray&& other) noexcept
+    Dynarray& operator=(Dynarray&& inpt) noexcept
     {
-        if (this != &other) {
+        if (this != &inpt) {
             delete[] data_;
 
-            size_ = other.size_;
-            data_ = other.data_;
+            size_ = inpt.size_;
+            data_ = inpt.data_;
 
-            other.size_ = 0;
-            other.data_ = nullptr;
+            inpt.size_ = 0;
+            inpt.data_ = nullptr;
         }
         return *this;
     }
@@ -114,24 +114,24 @@ class Dynarray
 
     /*------------------------------------------*/
 
-    bool operator<(const Dynarray& other) const
+    bool operator<(const Dynarray& inpt) const
     {
         return std::lexicographical_compare(
-            data_, data_ + size(), other.data_, other.data_ + other.size());
+            data_, data_ + size(), inpt.data_, inpt.data_ + inpt.size());
     }
 
-    bool operator==(const Dynarray& other) const
+    bool operator==(const Dynarray& inpt) const
     {
-        return std::equal(data_, data_ + size(), other.data_, other.data_ + other.size());
+        return std::equal(data_, data_ + size(), inpt.data_, inpt.data_ + inpt.size());
     }
 
-    bool operator<=(const Dynarray& other) const { return !(other < *this); }
+    bool operator<=(const Dynarray& inpt) const { return !(inpt < *this); }
 
-    bool operator!=(const Dynarray& other) const { return !(*this == other); }
+    bool operator!=(const Dynarray& inpt) const { return !(*this == inpt); }
 
-    bool operator>(const Dynarray& other) const { return !(*this <= other); }
+    bool operator>(const Dynarray& inpt) const { return !(*this <= inpt); }
 
-    bool operator>=(const Dynarray& other) const { return !(*this < other); }
+    bool operator>=(const Dynarray& inpt) const { return !(*this < inpt); }
 };
 
 std::ostream&

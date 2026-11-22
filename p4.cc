@@ -20,16 +20,16 @@ class UniquePtr
     UniquePtr(const UniquePtr&) = delete;
     UniquePtr& operator=(const UniquePtr&) = delete;
 
-    UniquePtr(UniquePtr&& other) noexcept
-      : ptr_(other.ptr_)
+    UniquePtr(UniquePtr&& inpt) noexcept
+      : ptr_(inpt.ptr_)
     {
-        other.ptr_ = nullptr;
+        inpt.ptr_ = nullptr;
     }
 
-    UniquePtr& operator=(UniquePtr&& other) noexcept
+    UniquePtr& operator=(UniquePtr&& inpt) noexcept
     {
-        if (this != &other) {
-            reset(other.release());
+        if (this != &inpt) {
+            reset(inpt.release());
         }
         return *this;
     }
@@ -69,16 +69,20 @@ class SharedPtr
     T* ptr_ = nullptr;
     std::size_t* count_ = nullptr;
 
+    void release_ownership() noexcept
+    {
+        T* ptr = std::exchange(ptr_, nullptr);
+        std::size_t* count = std::exchange(count_, nullptr);
+        if (count != nullptr && --(*count) == 0) {
+            delete ptr;
+            delete count;
+        }
+    }
+
   public:
     SharedPtr() = default;
 
-    ~SharedPtr()
-    {
-        if (count_ != nullptr && --(*count_) == 0) {
-            delete ptr_;
-            delete count_;
-        }
-    }
+    ~SharedPtr() { release_ownership(); }
 
     SharedPtr(T* ptr)
       : ptr_(ptr)
@@ -93,37 +97,43 @@ class SharedPtr
         }
     }
 
-    SharedPtr(const SharedPtr& other)
-      : ptr_(other.ptr_)
-      , count_(other.count_)
+    SharedPtr(const SharedPtr& inpt)
+      : ptr_(inpt.ptr_)
+      , count_(inpt.count_)
     {
         if (count_ != nullptr)
             ++(*count_);
     }
 
-    SharedPtr& operator=(const SharedPtr& other)
+    SharedPtr& operator=(const SharedPtr& inpt)
     {
-        SharedPtr copy(other);
+        if (this == &inpt) {
+            return *this;
+        }
+        SharedPtr copy(inpt);
         return *this = std::move(copy);
     }
 
-    SharedPtr(SharedPtr&& other) noexcept
-      : ptr_(other.ptr_)
-      , count_(other.count_)
+    SharedPtr(SharedPtr&& inpt) noexcept
+      : ptr_(inpt.ptr_)
+      , count_(inpt.count_)
     {
-        other.ptr_ = nullptr;
-        other.count_ = nullptr;
+        inpt.ptr_ = nullptr;
+        inpt.count_ = nullptr;
     }
 
-    SharedPtr& operator=(SharedPtr&& other) noexcept
+    SharedPtr& operator=(SharedPtr&& inpt) noexcept
     {
-        if (this != &other) {
-            SharedPtr replacement(std::move(other));
+        if (this != &inpt) {
+            SharedPtr replacement(std::move(inpt));
+            release_ownership();
             std::swap(ptr_, replacement.ptr_);
             std::swap(count_, replacement.count_);
         }
         return *this;
     }
+
+    /*--------------------------------------------------------------*/
 
     T& operator*() { return *ptr_; }
     const T& operator*() const { return *ptr_; }
