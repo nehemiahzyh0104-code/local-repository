@@ -2,6 +2,7 @@
 #define SMART_POINTERS_HPP 1
 
 #include <cstddef>
+#include <utility>
 
 template<typename T>
 class UniquePtr
@@ -28,14 +29,12 @@ class UniquePtr
     UniquePtr& operator=(UniquePtr&& other) noexcept
     {
         if (this != &other) {
-            delete ptr_;
-            ptr_ = other.ptr_;
-            other.ptr_ = nullptr;
+            reset(other.release());
         }
         return *this;
     }
 
-    ~UniquePtr() { delete[] ptr_; }
+    ~UniquePtr() { delete ptr_; }
 
     T& operator*() { return *ptr_; }
     const T& operator*() const { return *ptr_; }
@@ -45,12 +44,7 @@ class UniquePtr
 
     explicit operator bool() const { return ptr_ != nullptr; }
 
-    T* get() const
-    {
-        if (ptr_ == nullptr)
-            return nullptr;
-        return ptr_;
-    }
+    T* get() const { return ptr_; }
 
     void reset(T* ptr = nullptr)
     {
@@ -78,43 +72,42 @@ class SharedPtr
   public:
     SharedPtr() = default;
 
+    ~SharedPtr()
+    {
+        if (count_ != nullptr && --(*count_) == 0) {
+            delete ptr_;
+            delete count_;
+        }
+    }
+
     SharedPtr(T* ptr)
       : ptr_(ptr)
     {
-        if (ptr_ != nullptr)
-            count_ = new std::size_t{ 2 };
+        if (ptr_ != nullptr) {
+            try {
+                count_ = new std::size_t{ 1 };
+            } catch (...) {
+                delete ptr_;
+                throw;
+            }
+        }
     }
 
     SharedPtr(const SharedPtr& other)
       : ptr_(other.ptr_)
       , count_(other.count_)
     {
-        if (ptr_ != nullptr)
+        if (count_ != nullptr)
             ++(*count_);
     }
 
     SharedPtr& operator=(const SharedPtr& other)
     {
-        if (this == &other) {
-            return *this;
-        }
-
-        if (count_ != nullptr && --(*count_) == 0) {
-            delete ptr_;
-            delete count_;
-        }
-
-        ptr_ = other.ptr_;
-        count_ = other.count_;
-
-        if (count_ != nullptr) {
-            ++(*count_);
-        }
-
-        return *this;
+        SharedPtr copy(other);
+        return *this = std::move(copy);
     }
 
-    SharedPtr(SharedPtr&& other)
+    SharedPtr(SharedPtr&& other) noexcept
       : ptr_(other.ptr_)
       , count_(other.count_)
     {
@@ -124,23 +117,25 @@ class SharedPtr
 
     SharedPtr& operator=(SharedPtr&& other) noexcept
     {
-        if (this == &other) {
-            return *this;
+        if (this != &other) {
+            SharedPtr replacement(std::move(other));
+            std::swap(ptr_, replacement.ptr_);
+            std::swap(count_, replacement.count_);
         }
-
-        if (count_ != nullptr && --(*count_) == 0) {
-            delete ptr_;
-            delete count_;
-        }
-
-        ptr_ = other.ptr_;
-        count_ = other.count_;
-
-        other.ptr_ = nullptr;
-        other.count_ = nullptr;
-
         return *this;
     }
+
+    T& operator*() { return *ptr_; }
+    const T& operator*() const { return *ptr_; }
+
+    T* operator->() { return ptr_; }
+    const T* operator->() const { return ptr_; }
+
+    explicit operator bool() const { return ptr_ != nullptr; }
+
+    T* get() const { return ptr_; }
+
+    std::size_t use_count() const { return count_ == nullptr ? 0 : *count_; }
 };
 
 #endif

@@ -116,24 +116,18 @@ class Dynarray
 
     bool operator<(const Dynarray& other) const
     {
-        if (empty() || other.empty())
-            return empty() && !other.empty();
-
         return std::lexicographical_compare(
             data_, data_ + size(), other.data_, other.data_ + other.size());
     }
 
     bool operator==(const Dynarray& other) const
     {
-        if (size() != other.size()) {
-            return false;
-        }
-        return empty() || std::equal(data_, data_ + size(), other.data_);
+        return std::equal(data_, data_ + size(), other.data_, other.data_ + other.size());
     }
 
-    bool operator!=(const Dynarray& other) const { return !(*this == other); }
+    bool operator<=(const Dynarray& other) const { return !(other < *this); }
 
-    bool operator<=(const Dynarray& other) const { return *this == other || *this < other; }
+    bool operator!=(const Dynarray& other) const { return !(*this == other); }
 
     bool operator>(const Dynarray& other) const { return !(*this <= other); }
 
