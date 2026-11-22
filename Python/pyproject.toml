@@ -6,9 +6,12 @@ dependencies = [
     "beautifulsoup4>=4.15.0",
     "bs4>=0.0.2",
     "fonttools>=4.67.0", # Apply VVAR vertical-origin deltas when embedding static fonts.
+    "ipykernel>=7.4.0",
     "matplotlib>=3.11.2",
+    "notebook>=7.6.5",
     "numpy>=2.5.3",
     "pandas>=3.0.5",
+    "pip>=26.3",
     "pymupdf>=2.1",
     "sympy",
     "weasyprint>=70.0",
