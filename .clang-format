@@ -1,2 +1,28 @@
 BasedOnStyle: GNU
 IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 100
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterControlStatement: Never
+  AfterFunction: true
+  AfterStruct: true
+  AfterEnum: true
+  AfterUnion: true
+  BeforeElse: false
+  BeforeWhile: false
+  IndentBraces: false
+BinPackArguments: true
+BinPackParameters: BinPack
+PenaltyBreakBeforeFirstCallParameter: 1000
+ContinuationIndentWidth: 4
+PointerAlignment: Right
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+IndentCaseLabels: false
+SortIncludes: Never
+PackConstructorInitializers: Never
+BreakConstructorInitializers: BeforeColon
+ConstructorInitializerIndentWidth: 4
+PenaltyBreakBeforeMemberAccess: 1000
