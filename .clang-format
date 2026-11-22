@@ -12,6 +12,7 @@ BraceWrapping:
   AfterControlStatement: Never
   AfterFunction: true
   AfterStruct: true
+  AfterClass: true
   AfterEnum: true
   AfterUnion: true
   BeforeElse: false
