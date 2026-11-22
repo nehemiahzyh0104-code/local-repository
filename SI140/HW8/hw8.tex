@@ -1,0 +1,474 @@
+\documentclass[a4paper]{article}
+
+% \usepackage[default]{fontsetup}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{tikz}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%  
+
+\topmargin=-0.2in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.5in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass : \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+
+\newenvironment{homeworkProblem}[2][-1]{%
+    \ifnum#1>0\relax
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter} (#2 points)}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{%
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Class
+%   - Due date
+%   - Name
+%   - Student ID
+
+\newcommand{\hmwkTitle}{Homework\ \#08}
+\newcommand{\hmwkClass}{Probability \& Statistics for EECS}
+\newcommand{\hmwkDueDate}{2026-11-22}
+\newcommand{\hmwkAuthorName}{Zhang Yiheng}
+\newcommand{\hmwkAuthorID}{2025531068}
+
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\\  \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 23:59}\\
+	\vspace{4in}
+}
+
+\author{
+	Name: \textbf{\hmwkAuthorName} \\
+	Student ID: \hmwkAuthorID}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+
+% \maketitle
+% \thispagestyle{empty}
+% \pagebreak
+
+\date{
+Due on Nov. 22, 2026, 23:59 UTC+8}
+\title{SI 140A.02  Probability \& Statistics for EECS, Fall 2026 \\
+Homework 8}
+\author{Name: \textbf{\hmwkAuthorName} \\ Student ID: \hmwkAuthorID}
+\maketitle
+Read all the instructions below carefully before you start working on the assignment, and before you make a submission.
+\begin{itemize}
+    \item Submit your homework as a single PDF file.
+Written solutions to Problems 1, 2, 4, 5, and 6 must be
+prepared using \textbf{LaTeX}. For Problem 3, complete the
+provided Jupyter notebook and export it to PDF.
+Submissions that do not follow these format requirements
+will receive no credit.
+    \item You are required to write down all the major steps towards making your conclusions; otherwise you may obtain limited points of the problem.
+    \item Write your homework in English; otherwise you will get no points of this homework.
+    \item Any form of plagiarism will lead to $0$ point of this homework. 
+\end{itemize}
+\newpage
+
+\begin{homeworkProblem}{10}
+
+Let $X_1,X_2,X_3,X_4$ be independent and identically distributed
+continuous random variables. Their distribution is unspecified.
+Prove that
+\[
+\Pr(X_1<X_2,\ X_3<X_2,\ X_3<X_4)=\frac{5}{24}.
+\]
+
+\medskip
+\solution
+
+
+Since $X_1,\dots,X_4$ are i.i.d.\ and continuous, $\Pr(X_i=X_j)=0$ for every
+$i\neq j$, so with probability $1$ the four values are distinct and determine a
+strict ordering. Because the joint distribution of $(X_1,X_2,X_3,X_4)$ is
+invariant under any permutation of the indices (i.i.d.\ assumption), each of the
+$4!=24$ possible orderings has the same probability $\frac1{24}$, regardless of
+the common distribution.
+
+The event $A=\{X_1<X_2,\ X_3<X_2,\ X_3<X_4\}$ is a union of orderings, so
+$\Pr(A)=\frac{\#\{\text{orderings satisfying }A\}}{24}$. We count orderings
+(from smallest to largest) consistent with $1<2$, $3<2$, $3<4$. The smallest
+element must have nothing required below it, so it is $X_1$ or $X_3$.
+\begin{itemize}
+\item Smallest is $X_1$: the remaining $X_2,X_3,X_4$ must satisfy $X_3<X_2$ and
+$X_3<X_4$, so $X_3$ is next and $X_2,X_4$ can be in either order:
+$2$ orderings ($1\,3\,2\,4$ and $1\,3\,4\,2$).
+\item Smallest is $X_3$: the remaining $X_1,X_2,X_4$ only need $X_1<X_2$, which
+holds in exactly half of the $3!=6$ orderings: $3$ orderings
+($3\,1\,2\,4$, $3\,1\,4\,2$, $3\,4\,1\,2$).
+\end{itemize}
+Hence there are $2+3=5$ favourable orderings and
+\[
+\Pr(X_1<X_2,\ X_3<X_2,\ X_3<X_4)=\frac{5}{24}.
+\]
+
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}{15}
+Let $U_1,\ldots,U_n$ be independent $\operatorname{Unif}(0,1)$
+random variables, where $n\ge1$. Define
+\[
+D=\min_{1\le i\le n}\left|U_i-\frac14\right|.
+\]
+
+\begin{enumerate}
+\item[(a)] Find $\Pr(D>t)$ for every real $t$.
+\item[(b)] Find $\mathbb E[D]$ without leaving any unevaluated integrals.
+\end{enumerate}
+
+\medskip
+\solution
+
+
+\textbf{(a)} Since $D\ge 0$, $\Pr(D>t)=1$ for $t<0$. For $t\ge0$, by independence,
+\[
+\Pr(D>t)=\Pr\Big(\bigcap_{i=1}^n\{|U_i-\tfrac14|>t\}\Big)=\Big(1-\Pr(|U_1-\tfrac14|\le t)\Big)^n .
+\]
+$\Pr(|U_1-\frac14|\le t)$ is the length of $[\frac14-t,\frac14+t]\cap[0,1]$:
+\begin{itemize}
+\item $0\le t<\frac14$: the interval lies inside $[0,1]$, length $2t$;
+\item $\frac14\le t<\frac34$: it is $[0,\frac14+t]$, length $t+\frac14$;
+\item $t\ge\frac34$: it covers $[0,1]$, length $1$.
+\end{itemize}
+Therefore
+\[
+\Pr(D>t)=
+\begin{cases}
+1, & t<0,\\[2pt]
+(1-2t)^n, & 0\le t<\frac14,\\[2pt]
+\left(\frac34-t\right)^n, & \frac14\le t<\frac34,\\[2pt]
+0, & t\ge\frac34.
+\end{cases}
+\]
+(The pieces agree at $t=\frac14$, both giving $2^{-n}$, and at $t=\frac34$, both giving $0$.)
+
+\textbf{(b)} Since $D\ge0$, $\E[D]=\int_0^\infty\Pr(D>t)\,dt$. Thus
+\[
+\E[D]=\int_0^{1/4}(1-2t)^n\,dt+\int_{1/4}^{3/4}\left(\tfrac34-t\right)^n\,dt.
+\]
+With $s=1-2t$ in the first integral and $r=\frac34-t$ in the second,
+\[
+\int_0^{1/4}(1-2t)^n\,dt=\frac12\int_{1/2}^{1}s^n\,ds=\frac{1-2^{-(n+1)}}{2(n+1)},
+\qquad
+\int_{1/4}^{3/4}\left(\tfrac34-t\right)^n dt=\int_0^{1/2}r^n\,dr=\frac{2^{-(n+1)}}{n+1}.
+\]
+Adding,
+\[
+\E[D]=\frac{1-2^{-(n+1)}+2\cdot2^{-(n+1)}}{2(n+1)}
+=\frac{1+2^{-(n+1)}}{2(n+1)}
+=\frac{2^{n+1}+1}{(n+1)\,2^{n+2}}.
+\]
+Check ($n=1$): $\E|U-\frac14|=\frac12(\frac14)^2+\frac12(\frac34)^2=\frac{5}{16}$, and the
+formula gives $\frac{5}{2\cdot 8}=\frac5{16}$.
+
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}{15}
+Complete Problem 3 in the accompanying Jupyter notebook.
+The full problem statement, instructor-provided code, and
+spaces for your written answers and implementation are
+included in the notebook.
+
+Complete all required written and coding sections, including
+the derivations, algorithm descriptions, plots, numerical
+comparisons, and explanations.
+
+Export your completed notebook to PDF and include it as the
+solution to Problem 3 in your homework PDF.
+
+\medskip
+\noindent\textbf{Converting the notebook to PDF.}
+If you are unfamiliar with notebook-to-PDF conversion,
+a Python script for converting an \texttt{.ipynb} file
+to HTML will be provided. If you use PyCharm, you may follow these steps:
+\begin{enumerate}
+    \item Run all required code cells in your completed notebook
+and save the notebook. Make sure that all required outputs,
+plots, and written answers are visible before conversion.
+    \item Run the provided Python script to convert your
+    completed notebook to an HTML file.You need to open \texttt{export\_notebook.py} and replace
+\texttt{your\_notebook.ipynb} with the path to your completed
+notebook. Run the script using a Python environment with
+\texttt{nbconvert} installed.
+If needed, install it by running
+\texttt{python -m pip install nbconvert} in the terminal.
+    \item Right-click the generated HTML file and select
+    \textbf{Open with}, then choose a web browser.
+    \item In the browser, press \texttt{Ctrl+P}
+    (\texttt{Command+P} on macOS), select
+    \textbf{Save as PDF}, and save the file.
+    \item Check that the saved PDF includes all required
+    code, outputs, plots, and written answers, with no
+    content cut off.
+\end{enumerate}
+
+\noindent\textbf{Submission.}
+Use an online PDF merging tool 
+like ilovepdf : https://www.ilovepdf.com to combine the PDF of your
+written solutions and the PDF exported from your notebook
+into \textbf{one PDF file}. Arrange the solutions in problem
+order.
+
+\medskip
+\solution
+
+
+See the completed notebook (exported PDF) attached after this page.
+
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}{20}
+Task A starts at time $0$ and requires
+$X\sim\operatorname{Expo}(\lambda)$ units of time to finish.
+Task B starts at a fixed time $a>0$ and requires
+$Y\sim\operatorname{Expo}(\mu)$ units of time after its own start
+to finish. Assume that $X$ and $Y$ are independent and
+$\lambda,\mu>0$. Let
+\[
+T=\min\{X,a+Y\}
+\]
+be the time at which the first task finishes.
+
+\begin{enumerate}
+\item[(a)] Find $\mathbb E[T]$.
+\item[(b)] Find the probability that task A finishes before task B.
+\end{enumerate}
+
+\medskip
+\solution
+
+
+\textbf{(a)} $T\ge0$, so $\E[T]=\int_0^\infty\Pr(T>t)\,dt$. By independence,
+$\Pr(T>t)=\Pr(X>t)\Pr(a+Y>t)$, where $\Pr(X>t)=e^{-\lambda t}$ and
+\[
+\Pr(a+Y>t)=\begin{cases}1, & t<a,\\ e^{-\mu(t-a)}, & t\ge a.\end{cases}
+\]
+Hence
+\[
+\E[T]=\int_0^a e^{-\lambda t}\,dt+\int_a^\infty e^{-\lambda t}e^{-\mu(t-a)}\,dt
+=\frac{1-e^{-\lambda a}}{\lambda}+e^{-\lambda a}\int_0^\infty e^{-(\lambda+\mu)s}\,ds
+\quad(s=t-a),
+\]
+so
+\[
+\boxed{\E[T]=\frac{1-e^{-\lambda a}}{\lambda}+\frac{e^{-\lambda a}}{\lambda+\mu}.}
+\]
+(Interpretation: if task A has not finished by time $a$, which happens with
+probability $e^{-\lambda a}$, then by memorylessness the remaining time is the
+minimum of independent $\operatorname{Expo}(\lambda)$ and $\operatorname{Expo}(\mu)$,
+i.e.\ $\operatorname{Expo}(\lambda+\mu)$ with mean $\frac1{\lambda+\mu}$.)
+
+\textbf{(b)} Ties have probability $0$. Condition on whether $X<a$:
+\begin{itemize}
+\item If $X<a$, task A finishes before task B even starts:
+$\Pr(X<a)=1-e^{-\lambda a}$.
+\item If $X\ge a$ (probability $e^{-\lambda a}$), by the memoryless property
+$X-a\mid X\ge a\sim\operatorname{Expo}(\lambda)$, independent of $Y$. A finishes
+first iff $X-a<Y$, and for independent exponentials
+$\Pr(X-a<Y\mid X\ge a)=\frac{\lambda}{\lambda+\mu}$.
+\end{itemize}
+By the law of total probability,
+\[
+\boxed{\Pr(\text{A finishes before B})=\Pr(X<a+Y)
+=1-e^{-\lambda a}+e^{-\lambda a}\frac{\lambda}{\lambda+\mu}
+=1-\frac{\mu}{\lambda+\mu}e^{-\lambda a}.}
+\]
+
+
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}{20}
+Let $Z\sim N(0,1)$. Find the value of $a>0$ that maximizes
+\[
+\Pr(a<Z<2a),
+\]
+and express the maximum probability using the standard Normal
+CDF $\Phi$.
+
+\medskip
+\solution
+
+
+Let $g(a)=\Pr(a<Z<2a)=\Phi(2a)-\Phi(a)$ for $a>0$, and let
+$\varphi(z)=\frac1{\sqrt{2\pi}}e^{-z^2/2}$ be the standard Normal PDF. Then
+\[
+g'(a)=2\varphi(2a)-\varphi(a)=\frac{1}{\sqrt{2\pi}}\left(2e^{-2a^2}-e^{-a^2/2}\right)
+=\frac{e^{-a^2/2}}{\sqrt{2\pi}}\left(2e^{-3a^2/2}-1\right).
+\]
+The factor $2e^{-3a^2/2}-1$ is strictly decreasing in $a>0$, equals $1>0$ at
+$a=0$, and tends to $-1$ as $a\to\infty$. It vanishes exactly when
+\[
+e^{-3a^2/2}=\frac12\iff \frac{3a^2}{2}=\ln 2\iff a^*=\sqrt{\frac{2\ln2}{3}}\approx0.6798.
+\]
+So $g'(a)>0$ on $(0,a^*)$ and $g'(a)<0$ on $(a^*,\infty)$: $g$ increases and then
+decreases, so $a^*$ is the unique global maximizer on $a>0$ (also, $g(a)\to0$ as
+$a\to0^+$ and as $a\to\infty$). The maximum probability is
+\[
+\boxed{\max_{a>0}\Pr(a<Z<2a)=\Phi\!\left(2\sqrt{\tfrac{2\ln2}{3}}\right)-\Phi\!\left(\sqrt{\tfrac{2\ln2}{3}}\right)
+\approx\Phi(1.3596)-\Phi(0.6798)\approx 0.1613.}
+\]
+
+\end{homeworkProblem}
+\newpage
+\begin{homeworkProblem}{20}
+
+Let $X_1,\ldots,X_{100}$ be independent and identically distributed
+random variables with
+\[
+\Pr(X_i=-2)=\Pr(X_i=1)=\Pr(X_i=4)=\frac13.
+\]
+Use the Central Limit Theorem with an appropriate continuity
+correction to approximate
+\[
+\Pr\left(90<\sum_{i=1}^{100}X_i<111\right).
+\]
+Explain how you determine the endpoints used in the continuity
+correction. You may express your answer using the standard Normal
+CDF $\Phi$.
+
+\medskip
+\solution
+
+
+\textbf{Mean and variance.}
+$\E[X_i]=\frac{-2+1+4}{3}=1$, $\E[X_i^2]=\frac{4+1+16}{3}=7$, so
+$\Var(X_i)=7-1=6$. Let $S=\sum_{i=1}^{100}X_i$. Then
+\[
+\E[S]=100,\qquad \Var(S)=600,\qquad \sqrt{\Var(S)}=\sqrt{600}=10\sqrt6\approx24.495.
+\]
+
+\textbf{Lattice of possible values.} Each $X_i\in\{-2,1,4\}$ can be written as
+$X_i=1+3W_i$ with $W_i\in\{-1,0,1\}$. Hence
+\[
+S=100+3\sum_{i=1}^{100}W_i,
+\]
+so $S$ only takes values in $\{\dots,88,91,94,\dots\}$, i.e.\ integers with
+$S\equiv1\pmod 3$; neighbouring possible values are $3$ apart (not $1$).
+
+\textbf{Endpoints of the continuity correction.} The possible values with
+$90<S<111$ are exactly $S\in\{91,94,\dots,106,109\}$. The nearest possible
+values outside the range are $88$ (below) and $112$ (above). The continuity
+correction replaces each lattice point by an interval of width equal to the
+lattice spacing $3$, centred at that point, so we cut halfway between the last
+excluded and first included lattice points:
+\[
+\text{lower endpoint}=\frac{88+91}{2}=89.5,\qquad
+\text{upper endpoint}=\frac{109+112}{2}=110.5.
+\]
+(Using $90.5$ and $110.5$, i.e.\ a correction of $\pm\frac12$, would be wrong here
+because the spacing is $3$, not $1$; $90$ and $111$ themselves are not attainable.)
+Thus
+\[
+\Pr(90<S<111)=\Pr(89.5<S<110.5).
+\]
+
+\textbf{CLT approximation.} By the CLT, $S\overset{\cdot}{\sim}N(100,600)$, so
+\[
+\Pr(90<S<111)\approx
+\Phi\!\left(\frac{110.5-100}{\sqrt{600}}\right)-\Phi\!\left(\frac{89.5-100}{\sqrt{600}}\right)
+=2\Phi\!\left(\frac{10.5}{10\sqrt6}\right)-1
+\approx 2\Phi(0.4287)-1\approx 0.332.
+\]
+
+\end{homeworkProblem}
+\end{document}

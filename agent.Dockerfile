@@ -9,9 +9,8 @@ RUN apt-get update \
 
 RUN corepack enable pnpm \
  && npm install -g \
-      "@deepseek-ai/dsh@0.2.2-rc.1" \
-      "@deepseek-harness-tui/dsh-tui@0.20.1" \
-      "@openai/codex@0.168.0" \
+      "@deepseek-ai/dsh@0.2.2-rc.5" \
+      "@deepseek-harness-tui/dsh-tui@0.20.2" \
  && npm cache clean --force
 
 RUN curl -fsSL https://antigravity.google/cli/install.sh | bash \
