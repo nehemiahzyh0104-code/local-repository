@@ -1,8 +1,12 @@
 BasedOnStyle: GNU
+Language: Cpp
+
 IndentWidth: 4
 TabWidth: 4
 UseTab: Never
+ContinuationIndentWidth: 4
 ColumnLimit: 100
+
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterControlStatement: Never
@@ -13,16 +17,28 @@ BraceWrapping:
   BeforeElse: false
   BeforeWhile: false
   IndentBraces: false
-BinPackArguments: true
+
+SpaceBeforeParens: ControlStatements
+SpacesInParens: Never
+
+AlignAfterOpenBracket: AlwaysBreak
+BinPackArguments: false
 BinPackParameters: BinPack
-PenaltyBreakBeforeFirstCallParameter: 1000
-ContinuationIndentWidth: 4
+PenaltyBreakBeforeFirstCallParameter: 0
+
 PointerAlignment: Right
+ReferenceAlignment: Pointer
+
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+
 IndentCaseLabels: false
+
 SortIncludes: Never
+
 PackConstructorInitializers: Never
 BreakConstructorInitializers: BeforeColon
 ConstructorInitializerIndentWidth: 4
+
 PenaltyBreakBeforeMemberAccess: 1000

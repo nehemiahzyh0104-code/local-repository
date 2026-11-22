@@ -17,37 +17,37 @@ class Dynarray {
     int *data_ = nullptr;
 
   public:
-    Dynarray () = default;
+    Dynarray() = default;
 
-    explicit Dynarray (std::size_t n)
-        : size_ (n),
-          data_ (n == 0 ? nullptr : new int[n]{})
+    explicit Dynarray(std::size_t n)
+        : size_(n),
+          data_(n == 0 ? nullptr : new int[n]{})
     {
     }
 
-    Dynarray (std::size_t n, int x)
-        : Dynarray (n)
+    Dynarray(std::size_t n, int x)
+        : Dynarray(n)
     {
         for (std::size_t i = 0; i < size_; ++i) {
             data_[i] = x;
         }
     }
 
-    Dynarray (const int *begin, const int *end)
-        : Dynarray (begin == end ? 0 : static_cast<std::size_t> (end - begin))
+    Dynarray(const int *begin, const int *end)
+        : Dynarray(begin == end ? 0 : static_cast<std::size_t>(end - begin))
     {
         for (std::size_t i = 0; i < size_; ++i) {
             data_[i] = begin[i];
         }
     }
 
-    ~Dynarray ()
+    ~Dynarray()
     {
         delete[] data_;
     }
 
-    Dynarray (const Dynarray &other)
-        : Dynarray (other.size_)
+    Dynarray(const Dynarray &other)
+        : Dynarray(other.size_)
     {
         for (std::size_t i = 0; i < size_; ++i) {
             data_[i] = other.data_[i];
@@ -55,25 +55,25 @@ class Dynarray {
     }
 
     Dynarray &
-    operator= (const Dynarray &other)
+    operator=(const Dynarray &other)
     {
         if (this != &other) {
-            Dynarray copy (other);
-            *this = std::move (copy);
+            Dynarray copy(other);
+            *this = std::move(copy);
         }
         return *this;
     }
 
-    Dynarray (Dynarray &&other) noexcept
-        : size_ (other.size_),
-          data_ (other.data_)
+    Dynarray(Dynarray &&other) noexcept
+        : size_(other.size_),
+          data_(other.data_)
     {
         other.size_ = 0;
         other.data_ = nullptr;
     }
 
     Dynarray &
-    operator= (Dynarray &&other) noexcept
+    operator=(Dynarray &&other) noexcept
     {
         if (this != &other) {
             delete[] data_;
@@ -88,19 +88,19 @@ class Dynarray {
     }
 
     std::size_t
-    size () const
+    size() const
     {
         return size_;
     }
 
     bool
-    empty () const
+    empty() const
     {
         return size_ == 0;
     }
 
     int &
-    at (std::size_t i)
+    at(std::size_t i)
     {
         if (i >= size_) {
             throw std::out_of_range{ "Dynarray index out of range!" };
@@ -109,7 +109,7 @@ class Dynarray {
     }
 
     const int &
-    at (std::size_t i) const
+    at(std::size_t i) const
     {
         if (i >= size_) {
             throw std::out_of_range{ "Dynarray index out of range!" };
